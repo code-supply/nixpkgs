@@ -88,7 +88,7 @@ patchShebangs() {
                 arg0=${args%% *}
                 args=${args#* }
                 newPath="$(PATH="${!pathName}" command -v "env" || true)"
-                args="-S $(PATH="${!pathName}" command -v "$arg0" || true) $args"
+                args="-S $(PATH="${!pathName}" command -v "$arg0" || echo "$arg0") $args"
 
             # Check for unsupported 'env' functionality:
             # - options: something starting with a '-' besides '-S'

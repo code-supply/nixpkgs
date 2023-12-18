@@ -72,11 +72,27 @@ let
       };
     };
 
+    split-string-defaults-to-arg-when-not-on-path = stdenv.mkDerivation {
+      name = "split-string-defaults-to-arg-when-not-on-path";
+      strictDeps = false;
+      dontUnpack = true;
+      installPhase = ''
+        mkdir -p $out/bin
+        echo "#!/usr/bin/env -S elixir --sname mynodename" > $out/bin/test
+        echo >> $out/bin/test
+        chmod +x $out/bin/test
+        dontPatchShebangs=
+      '';
+      passthru = {
+        assertion = "grep '/bin/env -S elixir --sname mynodename' $out/bin/test > /dev/null";
+      };
+    };
+
   };
 in
 stdenv.mkDerivation {
   name = "test-patch-shebangs";
-  passthru = { inherit (tests) bad-shebang ignores-nix-store updates-nix-store split-string; };
+  passthru = { inherit (tests) bad-shebang ignores-nix-store updates-nix-store split-string split-string-defaults-to-arg-when-not-on-path; };
   buildCommand = ''
     validate() {
       local name=$1
