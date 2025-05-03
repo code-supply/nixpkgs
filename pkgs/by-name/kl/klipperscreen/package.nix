@@ -5,6 +5,7 @@
   wrapGAppsHook3,
   gobject-introspection,
   gitUpdater,
+  matchbox-keyboard,
 }:
 python3.pkgs.buildPythonApplication rec {
   pname = "KlipperScreen";
@@ -21,6 +22,10 @@ python3.pkgs.buildPythonApplication rec {
   nativeBuildInputs = [
     gobject-introspection
     wrapGAppsHook3
+  ];
+
+  buildInputs = [
+    matchbox-keyboard
   ];
 
   pythonPath = with python3.pkgs; [
